@@ -19,5 +19,8 @@ from django.urls import path
 from hero import views
 
 urlpatterns = [
-    path('hulk', views.HulkView.as_view()),
+    path('hulk',        views.HulkView.as_view()),
+    path('ironman',     views.IronManView.as_view()),
+    path('blackwidow',  views.BlackWidowView.as_view()),
+    path('',            views.IndexView.as_view()),
 ]
