@@ -128,6 +128,3 @@ venv.bak/
 .mypy_cache/
 
 bin/dktht.py
-
-#db.sqlite3
-db.sqlite3
