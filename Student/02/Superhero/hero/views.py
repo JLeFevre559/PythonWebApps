@@ -1,8 +1,9 @@
-from django.shortcuts import render
 from django.views.generic import TemplateView
+
 
 class IndexView(TemplateView):
     template_name = 'heroes.html'
+
 
 class HulkView(TemplateView):
     template_name = 'hero.html'
@@ -10,26 +11,28 @@ class HulkView(TemplateView):
     def get_context_data(self, **kwargs):
         return {
             'title': 'Hulk',
-            'id': 'Bruce Banner',
+            'body': 'My name is Bruce Banner',
             'image': '/static/images/hulk.jpg'
         }
 
+
 class IronManView(TemplateView):
-    template_name = 'hero.html'
+    template_name = "hero.html"
 
     def get_context_data(self, **kwargs):
         return {
             'title': 'Iron Man',
-            'id': 'Tony Stark',
+            'body': 'My name is Tony Stark, but I am Iron Man',
             'image': '/static/images/iron_man.jpg'
         }
-    
-class BlackWidowView(TemplateView):
+
+
+class BlackWidow(TemplateView):
     template_name = 'hero.html'
 
     def get_context_data(self, **kwargs):
         return {
             'title': 'Black Widow',
-            'id': 'Natasha Romanoff',
+            'body': 'My name is Natasha Romanova',
             'image': '/static/images/black_widow.jpg'
         }
