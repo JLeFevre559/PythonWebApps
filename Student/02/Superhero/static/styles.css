@@ -8,6 +8,9 @@
     --font-color: white;
     --font-header-color: gold;
     --border-color: black;
+    --link-color: rgb(176, 218, 231);
+    --link-hover-color: rgb(196, 238, 255);
+    --link-visited-color: rgb(146, 188, 201);
 }
 body{
     background-color: var(--secondary-color);
@@ -24,6 +27,10 @@ body{
     width: 100%;
     border:1.5vw solid var(--border-color);
     border-width: 2px;
+    color: var(--font-header-color);
+}
+h1{
+    color: var(--font-header-color);
 }
 .content{
     display:flex;
@@ -43,4 +50,14 @@ ul{
     position:relative;
     left:-5px;
     text-align: left;
+}
+a{
+    color: var(--link-color);
+    text-decoration: none;
+}
+a:hover{
+    color: var(--link-hover-color);
+}
+a:visited{
+    color: var(--link-visited-color);
 }
