@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}My Superhero Page{% endblock %}
+{% block content %}
+<h1>My Superhero Page</h1>
+<table>
+    <thead>
+        <th>Superhero</th>
+        <th>Image</th>
+        <th>Description</th>
+        <th>Identity</th>
+    </thead>
+<tbody>
+{% for hero in heroes %}
+    <tr>
+        <td>{{ hero.name }}</td>
+        <td>
+            <a href="hero/{{ hero.image }}">
+                <img src="static/images/{{ hero.image }}.jpg" alt="{{ hero.name }}" width="300">
+            </a>
+        </td>
+        <td>{{ hero.description }}</td>
+        <td>{{ hero.identity }}</td>
+    </tr>
+{% endfor %}
+</tbody>
+</table>
+{% endblock %}

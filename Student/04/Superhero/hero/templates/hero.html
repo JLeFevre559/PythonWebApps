@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<h1>{{ title }}</h1>
+<p>{{ body }}</p>
+<h1>{{ hero.name }}</h1>
+<img src="static/images/{{ hero.image }}.jpg"' %}' alt="{{ hero.name }}" width="300">
+<p>{{ hero.description }}</p>
+<p>{{ hero.identity }}</p>
+<p>
+    <a href=".">Show all heroes</a>
+</p>
+{% endblock %}
