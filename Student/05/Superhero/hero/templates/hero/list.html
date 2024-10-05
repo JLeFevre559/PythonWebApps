@@ -1,0 +1,33 @@
+{% extends "superhero_theme.html" %}
+{% load static %}
+{% block title %}My Superhero Page{% endblock %}
+{% block content %}
+<h1>My Superhero Page</h1>
+<table>
+    <thead>
+        <th>Superhero</th>
+        <th>Image</th>
+        <th>Description</th>
+        <th>Identity</th>
+        <th>Strengths</th>
+        <th>Weaknesses</th>
+    </thead>
+<tbody>
+{% for hero in superheroes %}
+    <tr>
+        <td>{{ hero.name }}</td>
+        <td>
+            <a href="{% url 'hero-detail' hero.id %}">
+                <img src="{% static 'images/'|add:hero.image %}" alt="{{ hero.name }}" width="100">
+            </a>
+        </td>
+        <td>{{ hero.description }}</td>
+        <td>{{ hero.identity }}</td>
+        <td>{{ hero.strengths }}</td>
+        <td>{{ hero.weaknesses }}</td>
+    </tr>
+{% endfor %}
+</tbody>
+</table>
+<a class="btn btn-primary" href="{% url 'hero-add' %}">Add Superhero</a>
+{% endblock %}
