@@ -49,6 +49,6 @@ class SignUpView(View):
         if form.is_valid():
             user = form.save()
             login(request, user)  # Automatically log the user in after registration
-            return redirect(reverse_lazy('home'))  # Replace 'home' with your actual URL name
+            return redirect(reverse_lazy('hero-list'))  # Replace 'home' with your actual URL name
 
         return render(request, self.template_name, {'form': form})

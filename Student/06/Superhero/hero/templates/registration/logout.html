@@ -2,5 +2,8 @@
 {% block title %}Log Out{% endblock %}
 
 {% block content %}
-<button href="{% url 'logout' %}">Log Out</button>
+<form method="post" action="{% url 'logout' %}">
+    {% csrf_token %}
+    <button type="submit">Logout</button>
+</form>
 {% endblock %}

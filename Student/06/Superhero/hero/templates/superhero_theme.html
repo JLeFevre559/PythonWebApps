@@ -10,7 +10,20 @@
     </head>
     <body>
         <div class="header">
+            <div class="spacer" style="width:134px"></div>
             <h1>Joel LeFevre BACS 350</h1>
+            <!--Show login status-->
+            {% if user.is_authenticated %}
+                <p>Logged in as {{ user.username }}. <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit">Logout</button>
+                </form></p>
+            {% else %}
+                <div class="button-box">
+                    <button><a href="{% url 'login' %}">Log In</a></button>
+                    <button><a href="{% url 'signup' %}">Sign up</a></button>
+                </div>
+            {% endif %}
         </div>
         <div class="content">
             {% block content %}{% endblock %}
