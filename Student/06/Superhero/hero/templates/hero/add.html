@@ -1,0 +1,18 @@
+{% extends "superhero_theme.html" %}
+
+{% block title %}Add a Superhero{% endblock %}
+
+{% block content %}
+<h1>Add a Superhero</h1>
+    
+{% load crispy_forms_tags %}
+<form action="{% url 'hero-add' %}" method="post">{% csrf_token %}
+
+    {{ form|crispy }}
+
+    <button type="submit" class="btn btn-primary">Add Superhero</button>
+    <a class="btn btn-secondary" href="{% url 'hero-list' %}">Cancel</a>
+</form>
+
+
+{% endblock %}
