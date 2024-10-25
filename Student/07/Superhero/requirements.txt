@@ -10,3 +10,5 @@ requests
 pillow
 sqlparse
 whitenoise
+crispy-bootstrap4
+tzdata
