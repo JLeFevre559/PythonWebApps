@@ -7,8 +7,11 @@ from django.contrib.auth.forms import UserCreationForm
 from django.views import View
 from django.shortcuts import redirect
 from django.contrib.auth import login
+from django.views.generic import TemplateView
 
-# Create your views here.
+class homeView(TemplateView):
+    template_name = 'index.html'
+    
 class HeroListView(ListView):
      model = Superhero
      template_name = 'hero/list.html'
