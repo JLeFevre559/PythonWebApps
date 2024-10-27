@@ -1,0 +1,25 @@
+{% extends "superhero_theme.html" %}
+{% load static %}
+
+{% block title %}Superhero Details{% endblock %}
+
+{% block content %}
+<h1>{{ superhero.name }}</h1>
+
+<div class="card">
+    <img src="{% static 'images/'|add:superhero.image %}" alt="{{ hero.name }}" width="300px">
+    
+    <div class="card-body">
+        <h5 class="card-title">Identity: {{ superhero.identity }}</h5>
+        <p class="card-text">{{ superhero.description }}</p>
+        <p><strong>Strengths:</strong> {{ superhero.strengths }}</p>
+        <p><strong>Weaknesses:</strong> {{ superhero.weaknesses }}</p>
+    </div>
+</div>
+
+<!-- Buttons for editing and deleting the superhero -->
+<a class="btn btn-primary" href="{% url 'hero-edit' superhero.pk %}">Edit Superhero</a>
+<a class="btn btn-danger" href="{% url 'hero-delete' superhero.pk %}">Delete Superhero</a>
+<a class="btn btn-secondary" href="{% url 'hero-list' %}">Back to Superhero List</a>
+
+{% endblock %}

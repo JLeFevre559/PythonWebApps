@@ -1,0 +1,14 @@
+asgiref
+django
+dj-database-url
+django-crispy-forms
+gunicorn
+psycopg2-binary
+pytz
+markdown
+requests
+pillow
+sqlparse
+whitenoise
+crispy-bootstrap4
+tzdata

@@ -1,0 +1,12 @@
+{% extends 'superhero_theme.html' %}
+{% block title %}Log In{% endblock %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+
+    {{ form }}
+
+    <button type="submit">Log In</button>
+</form>
+{% endblock %}
