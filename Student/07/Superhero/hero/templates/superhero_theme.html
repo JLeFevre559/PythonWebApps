@@ -14,10 +14,11 @@
             <h1>Joel LeFevre BACS 350</h1>
             <!--Show login status-->
             {% if user.is_authenticated %}
-                <p>Logged in as {{ user.username }}. <form method="post" action="{% url 'logout' %}">
+                <form method="post" action="{% url 'logout' %}">
                     {% csrf_token %}
+                    Logged in as {{ user.username }}. 
                     <button type="submit">Logout</button>
-                </form></p>
+                </form>
             {% else %}
                 <div class="button-box">
                     <button><a href="{% url 'login' %}">Log In</a></button>
@@ -29,7 +30,7 @@
             {% block content %}{% endblock %}
         </div>
         <div class="footer">
-            <a href=".">Home</a>
+            <a href="{% url 'home' %}">Home</a>
         </div>
     </body>
 </html>

@@ -1,0 +1,27 @@
+{% extends "superhero_theme.html" %}
+{% load static %}
+
+{% block title %}Superhero Details{% endblock %}
+
+{% block content %}
+
+
+<div class="card">
+    <img src="{% static 'images/'|add:article.image %}" alt="{{ article.image }}" width="300px">
+    
+    <div class="card-body">
+        <h5 class="card-title">Hero: {{ article.hero }}</h5>
+        <h1>{{ article.title }}</h1>
+        <p><strong>Author:</strong> {{ article.author }}</p>
+        <p><strong>Date:</strong> {{ article.date }}</p>
+        <p class="card-text">{{ article.content }}</p>
+        
+    </div>
+</div>
+
+<!-- Buttons for editing and deleting the Article -->
+<a class="btn btn-primary" href="{% url 'article-edit' article.pk %}">Edit Article</a>
+<a class="btn btn-danger" href="{% url 'article-delete' article.pk %}">Delete Article</a>
+<a class="btn btn-secondary" href="{% url 'article-list' %}">Back to Article List</a>
+
+{% endblock %}

@@ -1,5 +1,9 @@
+from django.db.models.base import Model as Model
+from django.db.models.query import QuerySet
+from django.forms import BaseModelForm
+from django.http import HttpResponse
 from django.shortcuts import render
-from .models import Superhero
+from .models import Superhero, Article
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -8,6 +12,8 @@ from django.views import View
 from django.shortcuts import redirect
 from django.contrib.auth import login
 from django.views.generic import TemplateView
+from django.core.exceptions import PermissionDenied
+from .forms import ArticleForm
 
 class homeView(TemplateView):
     template_name = 'index.html'
@@ -55,3 +61,56 @@ class SignUpView(View):
             return redirect(reverse_lazy('hero-list'))  # Replace 'home' with your actual URL name
 
         return render(request, self.template_name, {'form': form})
+    
+class ArticleListView(ListView):
+    model = Article
+    template_name = 'article/list.html'
+    context_object_name = 'articles'
+
+class ArticleCreateView(LoginRequiredMixin, CreateView):
+    model = Article
+    template_name = 'article/add.html'
+    form_class = ArticleForm
+    success_url = reverse_lazy('article-list')
+
+
+    def form_valid(self, form):
+        # Set the author field to the current user's username before saving
+        form.instance.author = self.request.user.username
+        return super().form_valid(form)
+
+class ArticleDetailView(DetailView):
+    model = Article
+    template_name = 'article/detail.html'
+    context_object_name = 'article'
+
+#Article Update View requires username of logged in user to match author of article
+class ArticleUpdateView(LoginRequiredMixin, UpdateView):
+    model = Article
+    template_name = 'article/edit.html'
+    success_url = reverse_lazy('article-list')
+    form_class = ArticleForm
+
+    def get_object(self, queryset=None):
+        article = super().get_object(queryset)
+
+        # Check if the current user is the author of the object
+        if article.author != self.request.user.username:
+            raise PermissionDenied("You do not have permission to delete this object.")
+
+        return article
+    
+#Article Delete View requires username of logged in user to match author of article
+class ArticleDeleteView(LoginRequiredMixin, DeleteView):
+    model = Article
+    template_name = 'article/delete.html'
+    success_url = reverse_lazy('article-list')
+
+    def get_object(self, queryset=None):
+        article = super().get_object(queryset)
+
+        # Check if the current user is the author of the object
+        if article.author != self.request.user.username:
+            raise PermissionDenied("You do not have permission to delete this object.")
+
+        return article

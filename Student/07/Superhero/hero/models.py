@@ -9,4 +9,13 @@ class Superhero(models.Model):
     strengths = models.CharField(max_length=200)
     weaknesses = models.CharField(max_length=200)
 
-# Create your models here.
+    def __str__(self):
+        return self.name
+
+class Article(models.Model):
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    author = models.CharField(max_length=200)
+    date = models.DateField()
+    image = models.CharField(max_length=200)
+    hero = models.ForeignKey(Superhero, on_delete=models.CASCADE)
