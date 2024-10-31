@@ -41,7 +41,6 @@ services:
     source_dir: Student/08/Superhero
     run_command: |-
       python manage.py migrate --noinput
-      python manage.py loaddata database.json
       python manage.py createsuperuser --noinput
       gunicorn --worker-tmp-dir /dev/shm config.wsgi
     envs:
