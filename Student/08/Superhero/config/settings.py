@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 from os import environ
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -98,6 +99,7 @@ POSTGRES_READY = (
 )
 
 if POSTGRES_READY:
+    print("POSTGRES DB")
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
