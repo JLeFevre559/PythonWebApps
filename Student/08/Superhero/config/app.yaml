@@ -1,72 +1,62 @@
-alerts:
-- rule: DEPLOYMENT_FAILED
-- rule: DOMAIN_FAILED
-databases:
-- engine: PG
-  name: db
-features:
-- buildpack-stack=ubuntu-22
-ingress:
-  rules:
-  - component:
-      name: pythonwebapps-student-07-superhe
-    match:
-      path:
-        prefix: /
-  - component:
-      name: pythonwebapps-student-07-superh2
-    match:
-      path:
-        prefix: /static
 name: dolphin-app
 region: nyc
-services:
-- environment_slug: python
-  envs:
-  - key: DISABLE_COLLECTSTATIC
-    scope: RUN_AND_BUILD_TIME
-    value: "1"
-  - key: DJANGO_SUPERUSER_EMAIL
-    scope: RUN_AND_BUILD_TIME
-    value: jlefevre559@gmail.com
-  - key: DJANGO_SUPERUSER_USERNAME
-    scope: RUN_AND_BUILD_TIME
-    value: admin
-  - key: DJANGO_SUPERUSER_PASSWORD
-    scope: RUN_AND_BUILD_TIME
-    type: SECRET
-    value: EV[1:oAJuWqBdHnxeKxsCNHiStqmQbw1VDIz6:1htlQW9ot4J1wbrvj9hsvqHCnWRzrxaB37z+rVig]
-  github:
-    branch: main
-    deploy_on_push: true
-    repo: JLeFevre559/PythonWebApps
-  http_port: 8080
-  instance_count: 1
-  instance_size_slug: apps-s-1vcpu-0.5gb
-  name: pythonwebapps-student-07-superhe
-  run_command: |-
-    python manage.py migrate --noinput
-    python manage.py createsuperuser --noinput
-    gunicorn --worker-tmp-dir /dev/shm config.wsgi
-  source_dir: Student/08/Superhero
-static_sites:
-- environment_slug: html
-  github:
-    branch: main
-    deploy_on_push: true
-    repo: JLeFevre559/PythonWebApps
-  name: pythonwebapps-student-07-superh2
-  source_dir: Student/08/Superhero/static
+
+alerts:
+  - rule: DEPLOYMENT_FAILED
+  - rule: DOMAIN_FAILED
 
 databases:
-    - engine: PG
-      name: db
-      num_nodes: 1
-      size: db-s-dev-database
-      version: "12"
-    services:
-    - environment_slug: python
-      envs:
+  - engine: PG
+    name: db
+    num_nodes: 1
+    size: db-s-dev-database
+    version: "12"
+
+features:
+  - buildpack-stack=ubuntu-22
+
+ingress:
+  rules:
+    - component:
+        name: pythonwebapps-student-07-superhe
+      match:
+        path:
+          prefix: /
+    - component:
+        name: pythonwebapps-student-07-superh2
+      match:
+        path:
+          prefix: /static
+
+services:
+  - name: pythonwebapps-student-07-superhe
+    environment_slug: python
+    github:
+      branch: main
+      deploy_on_push: true
+      repo: JLeFevre559/PythonWebApps
+    http_port: 8080
+    instance_count: 1
+    instance_size_slug: apps-s-1vcpu-0.5gb
+    source_dir: Student/08/Superhero
+    run_command: |-
+      python manage.py migrate --noinput
+      python manage.py createsuperuser --noinput
+      gunicorn --worker-tmp-dir /dev/shm config.wsgi
+    envs:
+      - key: DISABLE_COLLECTSTATIC
+        scope: RUN_AND_BUILD_TIME
+        value: "1"
+      - key: DJANGO_SUPERUSER_EMAIL
+        scope: RUN_AND_BUILD_TIME
+        value: jlefevre559@gmail.com
+      - key: DJANGO_SUPERUSER_USERNAME
+        scope: RUN_AND_BUILD_TIME
+        value: admin
+      - key: DJANGO_SUPERUSER_PASSWORD
+        scope: RUN_AND_BUILD_TIME
+        type: SECRET
+        value: EV[1:oAJuWqBdHnxeKxsCNHiStqmQbw1VDIz6:1htlQW9ot4J1wbrvj9hsvqHCnWRzrxaB37z+rVig]
       - key: DATABASE_URL
         scope: RUN_TIME
         value: ${db.DATABASE_URL}
@@ -85,3 +75,12 @@ databases:
       - key: POSTGRES_PORT
         scope: RUN_AND_BUILD_TIME
         value: ${db.PORT}
+
+static_sites:
+  - name: pythonwebapps-student-07-superh2
+    environment_slug: html
+    github:
+      branch: main
+      deploy_on_push: true
+      repo: JLeFevre559/PythonWebApps
+    source_dir: Student/08/Superhero/static
