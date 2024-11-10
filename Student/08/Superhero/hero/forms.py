@@ -1,5 +1,6 @@
 from django import forms
-from .models import Article, Superhero
+from .models import Article, Superhero, Investigator
+from django.contrib.auth.models import User
 
 class ArticleForm(forms.ModelForm):
     class Meta:
@@ -23,4 +24,16 @@ class ArticleForm(forms.ModelForm):
             }
         ),
         label="Date"
+    )
+
+class InvestigatorForm(forms.ModelForm):
+    class Meta:
+        model = Investigator
+        fields = ['user','name']
+
+    user = forms.ModelChoiceField(
+        queryset=User.objects.all(),
+        empty_label="Select a User",
+        label="User",
+        widget=forms.Select(attrs={'class': 'form-control'})
     )

@@ -3,7 +3,7 @@ from django.db.models.query import QuerySet
 from django.forms import BaseModelForm
 from django.http import HttpResponse
 from django.shortcuts import render
-from .models import Superhero, Article
+from .models import Superhero, Article, Investigator
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -13,7 +13,8 @@ from django.shortcuts import redirect
 from django.contrib.auth import login
 from django.views.generic import TemplateView
 from django.core.exceptions import PermissionDenied
-from .forms import ArticleForm
+from .forms import ArticleForm, InvestigatorForm
+import markdown
 
 class homeView(TemplateView):
     template_name = 'index.html'
@@ -114,3 +115,48 @@ class ArticleDeleteView(LoginRequiredMixin, DeleteView):
             raise PermissionDenied("You do not have permission to delete this object.")
 
         return article
+    
+class PageView(TemplateView):
+
+    def get_template_names(self):
+        page = self.kwargs.get('page', 'index')
+        return f'{page}.html'
+    
+class DocumentView(TemplateView):
+    template_name = 'document.html'
+
+    def get_context_data(self, **kwargs):
+        document = "Documents/" + self.kwargs.get('doc', 'document') + ".md"
+        print(document)
+        markdown_text = open(document).read()
+        print(markdown_text)
+        return dict(html= markdown.markdown(markdown_text))
+    
+class InvestigatorCreateView(LoginRequiredMixin, CreateView):
+    model = Investigator
+    template_name = 'investigator/add.html'
+    form_class = InvestigatorForm
+    success_url = reverse_lazy('investigator-list')
+
+
+class InvestigatorListView(ListView):
+    model = Investigator
+    template_name = 'investigator/list.html'
+    context_object_name = 'investigators'
+
+class InvestigatorDetailView(DetailView):
+    model = Investigator
+    template_name = 'investigator/detail.html'
+    context_object_name = 'investigator'
+
+class InvestigatorUpdateView(LoginRequiredMixin, UpdateView):
+    model = Investigator
+    template_name = 'investigator/edit.html'
+    form_class = InvestigatorForm
+    success_url = reverse_lazy('investigator-list')
+
+class InvestigatorDeleteView(LoginRequiredMixin, DeleteView):
+    model = Investigator
+    template_name = 'investigator/delete.html'
+    success_url = reverse_lazy('investigator-list')
+    

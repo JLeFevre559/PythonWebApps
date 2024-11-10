@@ -1,0 +1,21 @@
+{% extends "superhero_theme.html" %}
+
+{% block title %}Delete Investigator{% endblock %}
+
+{% block content %}
+<h1>Delete {{ investigator.title }}?</h1>
+
+<p>Are you sure you want to delete the superhero <strong>{{ investigator.title }}</strong>?</p>
+<p>This action cannot be undone.</p>
+
+<form action="" method="post">
+    {% csrf_token %}
+    
+    <!-- Delete button -->
+    <button type="submit" class="btn btn-danger">Delete</button>
+
+    <!-- Cancel button -->
+    <a class="btn btn-secondary" href="{% url 'investigator-detail' investigator.pk %}">Cancel</a>
+</form>
+
+{% endblock %}

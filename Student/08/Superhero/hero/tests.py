@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import Superhero, Article
+from .models import Superhero, Article, Investigator
 from django.contrib.auth.models import User
 
 # Create your tests here.
@@ -197,3 +197,60 @@ class ArticleTestCase(TestCase):
         response = self.client.get(f'/articles/{article.pk}/delete/')
         self.assertEqual(response.status_code, 403)
         
+class InvestigatorTestCase(TestCase):
+    def setUp(self):
+        # create account
+        self.client.post('/accounts/signup/', {'username': 'testuser', 'password1': 'testpassword', 'password2': 'testpassword'})
+        # login
+        self.client.post('/accounts/login/', {'username': 'testuser', 'password': 'testpassword'})
+        self.user = User.objects.get(username='testuser')
+
+    def test_investigator_model(self):
+        investigator = Investigator.objects.create(
+            user=self.user,
+            name='Sherlock Holmes',
+        )
+        self.assertEqual(investigator.user, self.user)
+        self.assertEqual(investigator.name, 'Sherlock Holmes')
+
+    def test_investigator_create_view(self):
+        response = self.client.get('/investigator/add/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'investigator/add.html')
+
+    def test_investigator_update_view(self):
+        investigator = Investigator.objects.create(
+            user=self.user,
+            name='Sherlock Holmes',
+        )
+        response = self.client.get(f'/investigator/{investigator.pk}/edit/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'investigator/edit.html')
+    
+    def test_investigator_delete_view(self):
+        investigator = Investigator.objects.create(
+            user=self.user,
+            name='Sherlock Holmes',
+        )
+        response = self.client.get(f'/investigator/{investigator.pk}/delete/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'investigator/delete.html')
+
+        # test that only logged in users can delete the investigator
+        self.client.post('/accounts/logout/')
+        response = self.client.get(f'/investigator/{investigator.pk}/delete/')
+        self.assertEqual(response.status_code, 302)
+
+    def test_investigator_list_view(self):
+        response = self.client.get('/investigator/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'investigator/list.html')
+
+    def test_investigator_detail_view(self):
+        investigator = Investigator.objects.create(
+            user=self.user,
+            name='Sherlock Holmes',
+        )
+        response = self.client.get(f'/investigator/{investigator.pk}/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'investigator/detail.html')

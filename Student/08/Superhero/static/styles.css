@@ -78,3 +78,7 @@ a:visited{
 p{
     margin:auto;
 }
+.table{
+    --bs-table-color: var(--font-color);
+    --bs-table-bg: var(--primary-color);
+}

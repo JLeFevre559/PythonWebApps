@@ -3,7 +3,7 @@
 {% block title %}My Superhero Page{% endblock %}
 {% block content %}
 <h1>My Superhero Page</h1>
-<table>
+<table class="table table-hover">
     <thead>
         <th>Superhero</th>
         <th>Image</th>
@@ -15,7 +15,7 @@
 <tbody>
 {% for hero in superheroes %}
     <tr>
-        <td>{{ hero.name }}</td>
+        <td><a href="{% url 'hero-detail' hero.id %}">{{ hero.name }}</a></td>
         <td>
             <a href="{% url 'hero-detail' hero.id %}">
                 <img src="{% static 'images/'|add:hero.image %}" alt="{{ hero.name }}" width="100">

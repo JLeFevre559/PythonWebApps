@@ -1,0 +1,17 @@
+<div class="header">
+    <div class="spacer" style="width:134px"></div>
+    <h1>Joel LeFevre BACS 350</h1>
+    <!--Show login status-->
+    {% if user.is_authenticated %}
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            Logged in as {{ user.username }}. 
+            <button type="submit">Logout</button>
+        </form>
+    {% else %}
+        <div class="button-box">
+            <button><a href="{% url 'login' %}">Log In</a></button>
+            <button><a href="{% url 'signup' %}">Sign up</a></button>
+        </div>
+    {% endif %}
+</div>

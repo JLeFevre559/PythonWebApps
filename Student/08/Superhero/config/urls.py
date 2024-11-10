@@ -2,8 +2,10 @@ from django.contrib import admin
 from django.urls import path
 from hero.views import (
     HeroListView, HeroDetailView, HeroCreateView, HeroUpdateView, HeroDeleteView, 
-    SignUpView, homeView,
-    ArticleListView, ArticleCreateView, ArticleDetailView, ArticleUpdateView, ArticleDeleteView)
+    SignUpView, homeView, PageView, DocumentView,
+    ArticleListView, ArticleCreateView, ArticleDetailView, ArticleUpdateView, ArticleDeleteView,
+    InvestigatorListView, InvestigatorCreateView, InvestigatorDetailView, InvestigatorUpdateView, InvestigatorDeleteView,
+    )
 from django.urls import include
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
@@ -23,4 +25,11 @@ urlpatterns = [
     path('articles/<int:pk>/', ArticleDetailView.as_view(), name='article-detail'),
     path('articles/<int:pk>/edit/', ArticleUpdateView.as_view(), name='article-edit'),
     path('articles/<int:pk>/delete/', ArticleDeleteView.as_view(), name='article-delete'),
+    path('<str:page>.html', PageView.as_view(), name='Page'),
+    path('<str:doc>.md', DocumentView.as_view(), name='Document'),
+    path('investigator/', InvestigatorListView.as_view(), name='investigator-list'),
+    path('investigator/add/', InvestigatorCreateView.as_view(), name='investigator-add'),
+    path('investigator/<int:pk>/', InvestigatorDetailView.as_view(), name='investigator-detail'),
+    path('investigator/<int:pk>/edit/', InvestigatorUpdateView.as_view(), name='investigator-edit'),
+    path('investigator/<int:pk>/delete/', InvestigatorDeleteView.as_view(), name='investigator-delete'),
 ]

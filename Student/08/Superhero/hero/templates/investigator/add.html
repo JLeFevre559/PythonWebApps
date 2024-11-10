@@ -1,0 +1,18 @@
+{% extends "superhero_theme.html" %}
+
+{% block title %}Add an Investigator{% endblock %}
+
+{% block content %}
+<h1>Add an Investigator</h1>
+    
+{% load crispy_forms_tags %}
+<form action="{% url 'investigator-add' %}" method="post">{% csrf_token %}
+
+    {{ form|crispy }}
+
+    <button type="submit" class="btn btn-primary">Add Investigator</button>
+    <a class="btn btn-secondary" href="{% url 'investigator-list' %}">Cancel</a>
+</form>
+
+
+{% endblock %}

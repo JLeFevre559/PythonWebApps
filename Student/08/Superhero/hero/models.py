@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 
 class Superhero(models.Model):
     name = models.CharField(max_length=200)
@@ -19,3 +19,7 @@ class Article(models.Model):
     date = models.DateField()
     image = models.CharField(max_length=200)
     hero = models.ForeignKey(Superhero, on_delete=models.CASCADE)
+
+class Investigator(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=200)

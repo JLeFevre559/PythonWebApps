@@ -1,0 +1,9 @@
+{% extends 'superhero_theme.html' %}
+
+{% block title %}Document{% endblock %}
+
+{% block content %}
+    {% autoescape off %}
+    {{ html }}
+    {% endautoescape %}
+{% endblock %}

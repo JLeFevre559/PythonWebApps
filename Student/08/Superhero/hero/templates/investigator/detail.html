@@ -1,0 +1,21 @@
+{% extends "superhero_theme.html" %}
+{% load static %}
+
+{% block title %}Investigator Details{% endblock %}
+
+{% block content %}
+
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Investigator: {{ investigator.name }}</h5>
+        <h5 class="card-title">Investigator: {{ investigator.user }}</h5>
+    </div>
+</div>
+
+<!-- Buttons for editing and deleting the investigator -->
+<a class="btn btn-primary" href="{% url 'investigator-edit' investigator.pk %}">Edit investigator</a>
+<a class="btn btn-danger" href="{% url 'investigator-delete' investigator.pk %}">Delete investigator</a>
+<a class="btn btn-secondary" href="{% url 'investigator-list' %}">Back to investigator List</a>
+
+{% endblock %}
