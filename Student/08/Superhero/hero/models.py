@@ -11,6 +11,10 @@ class Superhero(models.Model):
 
     def __str__(self):
         return self.name
+    
+class Investigator(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=200)
 
 class Article(models.Model):
     title = models.CharField(max_length=200)
@@ -19,8 +23,5 @@ class Article(models.Model):
     date = models.DateField()
     image = models.CharField(max_length=200)
     hero = models.ForeignKey(Superhero, on_delete=models.CASCADE)
-    Investigator = models.ForeignKey(Investigator, on_delete=models.CASCADE)
+    Investigator = models.ForeignKey(Investigator, on_delete=models.CASCADE, null=True, blank=True)
 
-class Investigator(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=200)
