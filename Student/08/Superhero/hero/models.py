@@ -19,6 +19,7 @@ class Article(models.Model):
     date = models.DateField()
     image = models.CharField(max_length=200)
     hero = models.ForeignKey(Superhero, on_delete=models.CASCADE)
+    Investigator = models.ForeignKey(Investigator, on_delete=models.CASCADE)
 
 class Investigator(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

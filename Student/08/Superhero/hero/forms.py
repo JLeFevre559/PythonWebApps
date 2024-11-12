@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 class ArticleForm(forms.ModelForm):
     class Meta:
         model = Article
-        fields = ['title', 'content', 'date', 'image', 'hero']  # Only list needed fields
+        fields = ['title', 'content', 'date', 'image', 'hero', 'investigator']  # Only list needed fields
 
     # Customize the hero field
     hero = forms.ModelChoiceField(
@@ -24,6 +24,14 @@ class ArticleForm(forms.ModelForm):
             }
         ),
         label="Date"
+    )
+
+    # Customize the investigator field
+    investigator = forms.ModelChoiceField(
+        queryset=Investigator.objects.all(),
+        empty_label="Select an Investigator",
+        label="Investigator",
+        widget=forms.Select(attrs={'class': 'form-control'})
     )
 
 class InvestigatorForm(forms.ModelForm):

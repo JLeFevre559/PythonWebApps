@@ -13,6 +13,9 @@
         <h5 class="card-title">Hero: {{ article.hero }}</h5>
         <h1>{{ article.title }}</h1>
         <p><strong>Author:</strong> {{ article.author }}</p>
+        {% if article.investigator %}
+            <p><strong>Investigator:</strong> {{ article.investigator }}</p>
+        {% endif %}
         <p><strong>Date:</strong> {{ article.date }}</p>
         <p class="card-text">{{ article.content }}</p>
         
