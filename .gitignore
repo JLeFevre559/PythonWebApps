@@ -130,3 +130,5 @@ venv.bak/
 bin/dktht.py
 
 db.sqlite3
+Student/08/Superhero/heroes.csv
+Student/08/Superhero/articles.csv
