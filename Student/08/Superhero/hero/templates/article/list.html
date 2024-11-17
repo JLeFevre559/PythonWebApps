@@ -29,4 +29,6 @@
 </tbody>
 </table>
 <a class="btn btn-primary" href="{% url 'article-add' %}">Add Article</a>
+<a class="btn btn-success" href="{% url 'export_articles' 'csv' %}">Export to CSV</a>
+<a class="btn btn-info" href="{% url 'export_articles' 'json' %}">Export to JSON</a>
 {% endblock %}

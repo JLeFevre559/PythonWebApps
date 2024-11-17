@@ -189,3 +189,30 @@ def export_heroes(request, file_format):
     else:
         return HttpResponse(status=400)
     
+def export_articles(request, file_format):
+    articles = Article.objects.all()
+
+    if file_format == 'json':
+        response = HttpResponse(content_type='application/json')
+        response['Content-Disposition'] = 'attachment; filename="articles.json"'
+
+        data = [d for d in articles.values()]
+
+        response.write(json.dumps(data, indent=4, default=str))
+        return response
+    
+    elif file_format == 'csv':
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="articles.csv"'
+
+        writer = csv.writer(response)
+        writer.writerow(['title', 'content', 'author', 'date', 'image', 'hero', 'Investigator'])
+
+        for article in articles:
+            writer.writerow([article.title, article.content, article.author, article.date, article.image, article.hero, article.Investigator])
+
+        return response
+    
+    else:
+        return HttpResponse(status=400)
+    
