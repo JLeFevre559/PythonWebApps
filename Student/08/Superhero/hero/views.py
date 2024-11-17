@@ -15,6 +15,8 @@ from django.views.generic import TemplateView
 from django.core.exceptions import PermissionDenied
 from .forms import ArticleForm, InvestigatorForm
 import markdown
+import json
+import csv
 
 class homeView(TemplateView):
     template_name = 'index.html'
@@ -159,4 +161,31 @@ class InvestigatorDeleteView(LoginRequiredMixin, DeleteView):
     model = Investigator
     template_name = 'investigator/delete.html'
     success_url = reverse_lazy('investigator-list')
+
+def export_heroes(request, file_format):
+    superheroes = Superhero.objects.all()
+
+    if file_format == 'json':
+        response = HttpResponse(content_type='application/json')
+        response['Content-Disposition'] = 'attachment; filename="superheroes.json"'
+
+        data = [d for d in superheroes.values()]
+
+        response.write(json.dumps(data, indent=4))
+        return response
+    
+    elif file_format == 'csv':
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="superheroes.csv"'
+
+        writer = csv.writer(response)
+        writer.writerow(['name', 'identity', 'description', 'image', 'strengths', 'weaknesses'])
+
+        for superhero in superheroes:
+            writer.writerow([superhero.name, superhero.identity, superhero.description, superhero.image, superhero.strengths, superhero.weaknesses])
+
+        return response
+    
+    else:
+        return HttpResponse(status=400)
     

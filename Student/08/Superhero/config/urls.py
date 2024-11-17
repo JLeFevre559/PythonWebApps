@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 from hero.views import (
-    HeroListView, HeroDetailView, HeroCreateView, HeroUpdateView, HeroDeleteView, 
+    HeroListView, HeroDetailView, HeroCreateView, HeroUpdateView, HeroDeleteView, export_heroes,
     SignUpView, homeView, PageView, DocumentView,
     ArticleListView, ArticleCreateView, ArticleDetailView, ArticleUpdateView, ArticleDeleteView,
     InvestigatorListView, InvestigatorCreateView, InvestigatorDetailView, InvestigatorUpdateView, InvestigatorDeleteView,
@@ -32,4 +32,5 @@ urlpatterns = [
     path('investigator/<int:pk>/', InvestigatorDetailView.as_view(), name='investigator-detail'),
     path('investigator/<int:pk>/edit/', InvestigatorUpdateView.as_view(), name='investigator-edit'),
     path('investigator/<int:pk>/delete/', InvestigatorDeleteView.as_view(), name='investigator-delete'),
+    path('hero/export/<str:file_format>/', export_heroes, name='export_heroes'),
 ]

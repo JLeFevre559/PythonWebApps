@@ -29,5 +29,9 @@
 {% endfor %}
 </tbody>
 </table>
+
 <a class="btn btn-primary" href="{% url 'hero-add' %}">Add Superhero</a>
+
+<a class="btn btn-success" href="{% url 'export_heroes' 'csv' %}">Export to CSV</a>
+<a class="btn btn-info" href="{% url 'export_heroes' 'json' %}">Export to JSON</a>
 {% endblock %}
