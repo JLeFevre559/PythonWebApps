@@ -5,7 +5,8 @@ class Superhero(models.Model):
     name = models.CharField(max_length=200)
     identity = models.CharField(max_length=200)
     description = models.TextField()
-    image = models.ForeignKey('Photo', on_delete=models.CASCADE, null=True, blank=True)
+    image = models.CharField(max_length=200, null=True, blank=True)
+    photo = models.ForeignKey('Photo', on_delete=models.CASCADE, null=True, blank=True)
     strengths = models.CharField(max_length=200)
     weaknesses = models.CharField(max_length=200)
 
@@ -24,7 +25,8 @@ class Article(models.Model):
     content = models.TextField()
     author = models.CharField(max_length=200)
     date = models.DateField()
-    image = models.ForeignKey('Photo', on_delete=models.CASCADE, null=True, blank=True)
+    image = models.CharField(max_length=200, null=True, blank=True)
+    photo = models.ForeignKey('Photo', on_delete=models.CASCADE, null=True, blank=True)
     hero = models.ForeignKey(Superhero, on_delete=models.CASCADE)
     Investigator = models.ForeignKey(Investigator, on_delete=models.CASCADE, null=True, blank=True)
 
