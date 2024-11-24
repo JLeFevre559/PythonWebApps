@@ -34,6 +34,7 @@ def get_upload(instance, filename):
         return f'images/{filename}'
 
 class Photo(models.Model):
+    id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=200)
     image = models.ImageField(null=True, blank=True, upload_to=get_upload)
 
