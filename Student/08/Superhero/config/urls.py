@@ -5,10 +5,13 @@ from hero.views import (
     SignUpView, homeView, PageView, DocumentView,
     ArticleListView, ArticleCreateView, ArticleDetailView, ArticleUpdateView, ArticleDeleteView, export_articles,
     InvestigatorListView, InvestigatorCreateView, InvestigatorDetailView, InvestigatorUpdateView, InvestigatorDeleteView,
+    PhotoCreateView, PhotoListView, PhotoDetailView, PhotoDeleteView, PhotoUpdateView, PhotoCarouselView,
     )
 from django.urls import include
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -34,4 +37,10 @@ urlpatterns = [
     path('investigator/<int:pk>/delete/', InvestigatorDeleteView.as_view(), name='investigator-delete'),
     path('hero/export/<str:file_format>/', export_heroes, name='export_heroes'),
     path('article/export/<str:file_format>/', export_articles, name='export_articles'),
-]
+    path('photo/add/', PhotoCreateView.as_view(), name='photo-add'),
+    path('photo/', PhotoListView.as_view(), name='photo-list'),
+    path('photo/<int:pk>/', PhotoDetailView.as_view(), name='photo-detail'),
+    path('photo/<int:pk>/delete/', PhotoDeleteView.as_view(), name='photo-delete'),
+    path('photo/<int:pk>/edit/', PhotoUpdateView.as_view(), name='photo-edit'),
+    path('photo/carousel/', PhotoCarouselView.as_view(), name='photo-carousel'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

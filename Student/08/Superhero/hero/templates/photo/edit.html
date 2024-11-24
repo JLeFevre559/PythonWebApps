@@ -1,0 +1,18 @@
+{% extends "superhero_theme.html" %}
+
+{% block title %}Edit {{ photo.title }}{% endblock %}
+
+{% block content %}
+<h1>Edit {{ photo.title }}</h1>
+
+{% load crispy_forms_tags %}
+<form action="{% url 'photo-edit' photo.pk %}" method="post" enctype="multipart/form-data">
+    
+    {% csrf_token %}
+    
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <a class="btn btn-secondary" href="{% url 'photo-detail' photo.pk %}">Cancel</a>
+
+</form>
+{% endblock %}

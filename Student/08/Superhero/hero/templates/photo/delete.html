@@ -1,0 +1,21 @@
+{% extends "superhero_theme.html" %}
+
+{% block title %}Delete photo{% endblock %}
+
+{% block content %}
+<h1>Delete {{ photo.title }}?</h1>
+
+<p>Are you sure you want to delete the photo <strong>{{ photo.title }}</strong>?</p>
+<p>This action cannot be undone.</p>
+
+<form action="" method="post">
+    {% csrf_token %}
+    
+    <!-- Delete button -->
+    <button type="submit" class="btn btn-danger">Delete</button>
+
+    <!-- Cancel button -->
+    <a class="btn btn-secondary" href="{% url 'photo-detail' photo.pk %}">Cancel</a>
+</form>
+
+{% endblock %}

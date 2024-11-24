@@ -1,0 +1,21 @@
+{% extends "superhero_theme.html" %}
+{% load static %}
+
+{% block title %}photo Details{% endblock %}
+
+{% block content %}
+
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">photo: {{ photo.title }}</h5>
+        <img src="{{ photo.image.url }}" alt="{{ photo.title }}" style="width: 100px; height: 100px;">
+    </div>
+</div>
+
+<!-- Buttons for editing and deleting the photo -->
+<a class="btn btn-primary" href="{% url 'photo-edit' photo.pk %}">Edit photo</a>
+<a class="btn btn-danger" href="{% url 'photo-delete' photo.pk %}">Delete photo</a>
+<a class="btn btn-secondary" href="{% url 'photo-list' %}">Back to photo List</a>
+
+{% endblock %}

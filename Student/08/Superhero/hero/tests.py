@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import Superhero, Article, Investigator
+from .models import Superhero, Article, Investigator, Photo
 from django.contrib.auth.models import User
 
 # Create your tests here.
@@ -254,3 +254,65 @@ class InvestigatorTestCase(TestCase):
         response = self.client.get(f'/investigator/{investigator.pk}/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'investigator/detail.html')
+
+class PhotoTestCase(TestCase):
+    def setUp(self):
+        # create account
+        self.client.post('/accounts/signup/', {'username': 'testuser', 'password1': 'testpassword', 'password2': 'testpassword'})
+        # login
+        self.client.post('/accounts/login/', {'username': 'testuser', 'password': 'testpassword'})
+
+    def test_photo_model(self):
+        photo = Photo.objects.create(
+            title='Superman',
+            image='superman.jpg',
+        )
+        self.assertEqual(photo.title, 'Superman')
+        self.assertEqual(photo.image, 'superman.jpg')
+
+    def test_photo_create_view(self):
+        response = self.client.get('/photo/add/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'photo/add.html')
+
+    def test_photo_list_view(self):
+        response = self.client.get('/photo/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'photo/list.html')
+
+    def test_photo_detail_view(self):
+        photo = Photo.objects.create(
+            title='Superman',
+            image='superman.jpg',
+        )
+        response = self.client.get(f'/photo/{photo.pk}/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'photo/detail.html')
+
+    def test_photo_delete_view(self):
+        photo = Photo.objects.create(
+            title='Superman',
+            image='superman.jpg',
+        )
+        response = self.client.get(f'/photo/{photo.pk}/delete/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'photo/delete.html')
+
+        # test that only logged in users can delete the photo
+        self.client.post('/accounts/logout/')
+        response = self.client.get(f'/photo/{photo.pk}/delete/')
+        self.assertEqual(response.status_code, 302)
+
+    def test_photo_update_view(self):
+        photo = Photo.objects.create(
+            title='Superman',
+            image='superman.jpg',
+        )
+        response = self.client.get(f'/photo/{photo.pk}/edit/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'photo/edit.html')
+
+    def test_photo_carousel_view(self):
+        response = self.client.get('/photo/carousel/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'photo/carousel.html')

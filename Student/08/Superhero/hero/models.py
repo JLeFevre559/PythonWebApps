@@ -28,3 +28,12 @@ class Article(models.Model):
     hero = models.ForeignKey(Superhero, on_delete=models.CASCADE)
     Investigator = models.ForeignKey(Investigator, on_delete=models.CASCADE, null=True, blank=True)
 
+def get_upload(instance, filename):
+        return f'images/{filename}'
+
+class Photo(models.Model):
+    title = models.CharField(max_length=200)
+    image = models.ImageField(null=True, blank=True, upload_to=get_upload)
+
+    
+

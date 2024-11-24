@@ -1,0 +1,19 @@
+{% extends "superhero_theme.html" %}
+{% load static %}
+{% block title %}photos{% endblock %}
+{% block content %}
+<h1>photos</h1>
+<a class="btn btn-primary" href="{% url 'photo-carousel' %}">View Carousel</a>
+<table class="table table-hover">
+<tbody>
+{% for photo in photos %}
+        <tr>
+            <a href="{% url 'photo-detail' photo.id %}">{{ photo.name }}
+            <img src="{{ photo.image.url }}" alt="{{ photo.name }}" style="width: 100px; height: 100px;">
+            </a>
+        </tr>
+{% endfor %}
+</tbody>
+</table>
+<a class="btn btn-primary" href="{% url 'photo-add' %}">Add photo</a>
+{% endblock %}

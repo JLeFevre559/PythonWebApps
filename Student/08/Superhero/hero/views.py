@@ -3,7 +3,7 @@ from django.db.models.query import QuerySet
 from django.forms import BaseModelForm
 from django.http import HttpResponse
 from django.shortcuts import render
-from .models import Superhero, Article, Investigator
+from .models import Superhero, Article, Investigator, Photo
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -215,4 +215,58 @@ def export_articles(request, file_format):
     
     else:
         return HttpResponse(status=400)
+    
+class PhotoCreateView(LoginRequiredMixin, CreateView):
+    model = Photo
+    template_name = 'photo/add.html'
+    fields = '__all__'
+    success_url = reverse_lazy('photo-list')
+    
+class PhotoListView(ListView):
+    model = Photo
+    template_name = 'photo/list.html'
+    context_object_name = 'photos'
+
+class PhotoDetailView(DetailView):
+    model = Photo
+    template_name = 'photo/detail.html'
+    context_object_name = 'photo'
+
+class PhotoUpdateView(LoginRequiredMixin, UpdateView):
+    model = Photo
+    template_name = 'photo/edit.html'
+    fields = '__all__'
+    success_url = reverse_lazy('photo-list')
+
+class PhotoDeleteView(LoginRequiredMixin, DeleteView):
+    model = Photo
+    template_name = 'photo/delete.html'
+    success_url = reverse_lazy('photo-list')
+
+    #on success, this also needs to delete the saved image file
+    def delete(self, request, *args, **kwargs):
+        photo = self.get_object()
+        photo.image.delete()
+        return super().delete(request, *args, **kwargs)
+    
+def photo_data(id, photo):
+        x = dict(image_url=f"/media/{photo.image}", 
+                 id=str(id), 
+                 label=f"Photo {photo.image} {id}")
+        if id == 0:
+            x.update(active="active", aria='aria-current="true"')
+        return x    
+def carousel_data(photos):
+            return [photo_data(id, photo) for id, photo in enumerate(photos)]
+
+class PhotoCarouselView(TemplateView):
+    template_name = 'photo/carousel.html'
+
+    def get_context_data(self, **kwargs):
+        photos = Photo.objects.all()
+        return dict(title='Carousel View', carousel=carousel_data(photos))
+
+
+    
+
     
