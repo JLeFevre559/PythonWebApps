@@ -21,7 +21,7 @@
         <td>{{ article.date }}</td>
         <td>
             <a href="{% url 'article-detail' article.id %}">
-                <img src="{% static 'images/'|add:article.image %}" alt="{{ article.image }}" width="100">
+                <img src="{{ article.image.image.url }}" alt="{{ article.image }}" width="100">
             </a>
         </td>
     </tr>

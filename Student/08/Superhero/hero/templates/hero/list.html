@@ -17,8 +17,9 @@
     <tr>
         <td><a href="{% url 'hero-detail' hero.id %}">{{ hero.name }}</a></td>
         <td>
+            {{ hero.image.url }}
             <a href="{% url 'hero-detail' hero.id %}">
-                <img src="{% static 'images/'|add:hero.image %}" alt="{{ hero.name }}" width="100">
+                <img src="{{ hero.image.image.url }}" alt="{{ hero.name }}" width="100">
             </a>
         </td>
         <td>{{ hero.description }}</td>
