@@ -24,7 +24,6 @@ class Article(models.Model):
     content = models.TextField()
     author = models.CharField(max_length=200)
     date = models.DateField()
-    image = models.ForeignKey('Photo', on_delete=models.CASCADE, null=True, blank=True)
     hero = models.ForeignKey(Superhero, on_delete=models.CASCADE)
     Investigator = models.ForeignKey(Investigator, on_delete=models.CASCADE, null=True, blank=True)
 
