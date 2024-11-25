@@ -20,14 +20,14 @@ class SuperheroTestCase(TestCase):
             name='Superman',
             identity='Clark Kent',
             description='Superman is a superhero',
-            image=self.photo,
+            photo=self.photo,
             strengths='Super strength, flight, invulnerability',
             weaknesses='Kryptonite',
         )
         self.assertEqual(superhero.name, 'Superman')
         self.assertEqual(superhero.identity, 'Clark Kent')
         self.assertEqual(superhero.description, 'Superman is a superhero')
-        self.assertEqual(superhero.image, self.photo)
+        self.assertEqual(superhero.photo, self.photo)
         self.assertEqual(superhero.strengths, 'Super strength, flight, invulnerability')
         self.assertEqual(superhero.weaknesses, 'Kryptonite')
 
@@ -41,7 +41,7 @@ class SuperheroTestCase(TestCase):
             name='Superman',
             identity='Clark Kent',
             description='Superman is a superhero',
-            image=self.photo,
+            photo=self.photo,
             strengths='Super strength, flight, invulnerability',
             weaknesses='Kryptonite',
         )
@@ -59,7 +59,7 @@ class SuperheroTestCase(TestCase):
             name='Superman',
             identity='Clark Kent',
             description='Superman is a superhero',
-            image=self.photo,
+            photo=self.photo,
             strengths='Super strength, flight, invulnerability',
             weaknesses='Kryptonite',
         )
@@ -72,7 +72,7 @@ class SuperheroTestCase(TestCase):
             name='Superman',
             identity='Clark Kent',
             description='Superman is a superhero',
-            image=self.photo,
+            photo=self.photo,
             strengths='Super strength, flight, invulnerability',
             weaknesses='Kryptonite',
         )
@@ -97,7 +97,7 @@ class ArticleTestCase(TestCase):
             name='Superman',
             identity='Clark Kent',
             description='Superman is a superhero',
-            image=self.photo,
+            photo=self.photo,
             strengths='Super strength, flight, invulnerability',
             weaknesses='Kryptonite',
         )
@@ -106,14 +106,14 @@ class ArticleTestCase(TestCase):
             content='Superman saved the day by stopping a bank robbery',
             author=self.user.username,
             date='2021-01-01',
-            image=self.photo,
+            photo=self.photo,
             hero=superhero,
         )
         self.assertEqual(article.title, 'Superman Saves the Day')
         self.assertEqual(article.content, 'Superman saved the day by stopping a bank robbery')
         self.assertEqual(article.author, self.user.username)
         self.assertEqual(article.date, '2021-01-01')
-        self.assertEqual(article.image, self.photo)
+        self.assertEqual(article.photo, self.photo)
         self.assertEqual(article.hero, superhero)
     
     def test_article_list_view(self):
@@ -126,7 +126,7 @@ class ArticleTestCase(TestCase):
             name='Superman',
             identity='Clark Kent',
             description='Superman is a superhero',
-            image=self.photo,
+            photo=self.photo,
             strengths='Super strength, flight, invulnerability',
             weaknesses='Kryptonite',
         )
@@ -135,7 +135,7 @@ class ArticleTestCase(TestCase):
             content='Superman saved the day by stopping a bank robbery',
             author='Lois Lane',
             date='2021-01-01',
-            image=self.photo,
+            photo=self.photo,
             hero=superhero,
         )
         response = self.client.get(f'/articles/{article.pk}/')
@@ -152,7 +152,7 @@ class ArticleTestCase(TestCase):
             name='Superman',
             identity='Clark Kent',
             description='Superman is a superhero',
-            image=self.photo,
+            photo=self.photo,
             strengths='Super strength, flight, invulnerability',
             weaknesses='Kryptonite',
         )
@@ -161,7 +161,7 @@ class ArticleTestCase(TestCase):
             content='Superman saved the day by stopping a bank robbery',
             author=self.user.username,
             date='2021-01-01',
-            image=self.photo,
+            photo=self.photo,
             hero=superhero,
         )
         response = self.client.get(f'/articles/{article.pk}/edit/')
@@ -181,7 +181,7 @@ class ArticleTestCase(TestCase):
             name='Superman',
             identity='Clark Kent',
             description='Superman is a superhero',
-            image=self.photo,
+            photo=self.photo,
             strengths='Super strength, flight, invulnerability',
             weaknesses='Kryptonite',
         )
@@ -190,7 +190,7 @@ class ArticleTestCase(TestCase):
             content='Superman saved the day by stopping a bank robbery',
             author=self.user.username,
             date='2021-01-01',
-            image=self.photo,
+            photo=self.photo,
             hero=superhero,
         )
         response = self.client.get(f'/articles/{article.pk}/delete/')
@@ -279,12 +279,9 @@ class PhotoTestCase(TestCase):
         )
 
     def test_photo_model(self):
-        photo = Photo.objects.create(
-            title='Superman',
-            image=self.photo,
-        )
-        self.assertEqual(photo.title, 'Superman')
-        self.assertEqual(photo.image, self.photo)
+        get_photo = Photo.objects.get(title='Superman')
+        self.assertEqual(get_photo.title, 'Superman')
+        self.assertEqual(get_photo.image, self.photo.image)
 
     def test_photo_create_view(self):
         response = self.client.get('/photo/add/')
@@ -297,34 +294,22 @@ class PhotoTestCase(TestCase):
         self.assertTemplateUsed(response, 'photo/list.html')
 
     def test_photo_detail_view(self):
-        photo = Photo.objects.create(
-            title='Superman',
-            image=self.photo,
-        )
-        response = self.client.get(f'/photo/{photo.pk}/')
+        response = self.client.get(f'/photo/{self.photo.pk}/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'photo/detail.html')
 
     def test_photo_delete_view(self):
-        photo = Photo.objects.create(
-            title='Superman',
-            image=self.photo,
-        )
-        response = self.client.get(f'/photo/{photo.pk}/delete/')
+        response = self.client.get(f'/photo/{self.photo.pk}/delete/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'photo/delete.html')
 
         # test that only logged in users can delete the photo
         self.client.post('/accounts/logout/')
-        response = self.client.get(f'/photo/{photo.pk}/delete/')
+        response = self.client.get(f'/photo/{self.photo.pk}/delete/')
         self.assertEqual(response.status_code, 302)
 
     def test_photo_update_view(self):
-        photo = Photo.objects.create(
-            title='Superman',
-            image=self.photo,
-        )
-        response = self.client.get(f'/photo/{photo.pk}/edit/')
+        response = self.client.get(f'/photo/{self.photo.pk}/edit/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'photo/edit.html')
 

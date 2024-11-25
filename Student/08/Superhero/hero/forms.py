@@ -1,11 +1,11 @@
 from django import forms
-from .models import Article, Superhero, Investigator
+from .models import Article, Superhero, Investigator, Photo
 from django.contrib.auth.models import User
 
 class ArticleForm(forms.ModelForm):
     class Meta:
         model = Article
-        fields = ['title', 'content', 'date', 'image', 'hero', 'investigator']  # Only list needed fields
+        fields = ['title', 'content', 'date', 'hero', 'investigator','photo']  # Only list needed fields
 
     # Customize the hero field
     hero = forms.ModelChoiceField(
@@ -31,6 +31,13 @@ class ArticleForm(forms.ModelForm):
         queryset=Investigator.objects.all(),
         empty_label="Select an Investigator",
         label="Investigator",
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+    
+    photo= forms.ModelChoiceField(
+        queryset=Photo.objects.all(),
+        empty_label="Select a Photo",
+        label="Photo",
         widget=forms.Select(attrs={'class': 'form-control'})
     )
 
