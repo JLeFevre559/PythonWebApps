@@ -1,0 +1,27 @@
+<div class="card col-lg">
+
+    <div class="card-header message">
+        Message
+    </div>
+    <div class="card-body">
+        <table class="table table-hover">
+            <tr>
+                <th>Message</th>
+                <th>Description</th>
+            </tr>
+
+            {% for message in messages %}
+            <tr>
+                <td><a href="/message/{{ message.pk }}">{{ message.title }}</a></td>
+                <td>{{ message.body }}</td>
+            </tr>
+            {% endfor %}
+
+        </table>
+
+        <p>
+            <a href="/message/add" class="btn btn-success m-5">Add New Message</a>
+        </p>
+    </div>
+
+</div>

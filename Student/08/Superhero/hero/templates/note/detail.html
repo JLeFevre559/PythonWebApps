@@ -1,0 +1,26 @@
+{% extends 'superhero_theme.html' %}
+
+
+{% block title %}
+Note Details
+{% endblock title %}
+
+
+{% block content %}
+
+<h1>Note Details</h1>
+
+<div class="row">
+
+    {% include 'note/_note.html' %}
+
+    <!-- {% include 'note/_notes.html' %} -->
+
+    <a href="{% url 'note_delete' note.pk %}" class="btn btn-danger">Delete</a>
+
+    <a href="{% url 'note_edit' note.pk %}" class="btn btn-primary">Edit</a>
+
+</div>
+
+{% endblock content %}
+

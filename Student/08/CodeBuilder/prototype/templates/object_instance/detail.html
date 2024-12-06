@@ -1,0 +1,26 @@
+{% extends 'theme.html' %}
+
+
+{% block title %}
+ClassName Details
+{% endblock title %}
+
+
+{% block content %}
+
+<h1>ClassName Details</h1>
+
+<div class="row">
+
+    {% include 'object_instance/_object_instance.html' %}
+
+    <!-- {% include 'object_instance/_object_instances.html' %} -->
+
+    <a href="{% url 'object_instance_delete' object_instance.pk %}" class="btn btn-danger">Delete</a>
+
+    <a href="{% url 'object_instance_edit' object_instance.pk %}" class="btn btn-primary">Edit</a>
+
+</div>
+
+{% endblock content %}
+

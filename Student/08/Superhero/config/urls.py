@@ -13,6 +13,7 @@ from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('hero/', HeroListView.as_view(), name='hero-list'),
@@ -43,4 +44,5 @@ urlpatterns = [
     path('photo/<int:pk>/delete/', PhotoDeleteView.as_view(), name='photo-delete'),
     path('photo/<int:pk>/edit/', PhotoUpdateView.as_view(), name='photo-edit'),
     path('photo/carousel/', PhotoCarouselView.as_view(), name='photo-carousel'),
+    path('', include('hero.urls_note')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

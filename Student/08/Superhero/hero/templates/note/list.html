@@ -1,0 +1,20 @@
+{% extends 'superhero_theme.html' %}
+
+
+{% block title %}
+    List of Notes
+{% endblock title %}
+
+
+{% block content %}
+
+    <h1>My Notes</h1>
+
+    <div class="row">
+
+        {% include 'note/_notes.html' %}
+
+    </div>
+
+{% endblock content %}
+

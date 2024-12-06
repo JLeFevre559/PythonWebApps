@@ -1,0 +1,27 @@
+<div class="card col-lg">
+
+    <div class="card-header message">
+        testboi
+    </div>
+    <div class="card-body">
+        <table class="table table-hover">
+            <tr>
+                <th>testboi</th>
+                <th>Description</th>
+            </tr>
+
+            {% for testy in testys %}
+            <tr>
+                <td><a href="/testy/{{ testy.pk }}">{{ testy.title }}</a></td>
+                <td>{{ testy.body }}</td>
+            </tr>
+            {% endfor %}
+
+        </table>
+
+        <p>
+            <a href="/testy/add" class="btn btn-success m-5">Add New testboi</a>
+        </p>
+    </div>
+
+</div>
